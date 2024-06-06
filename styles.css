@@ -20,29 +20,71 @@ body {
 
 .name {
     font-size: 5em;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.name:hover {
+    cursor:default;
+}
+
+.description {
+    font-size: 1.2em;
+    color: #808080;
+    margin-bottom: 15px;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out, transform 0.3s ease;
+}
+
+.description.fade-out {
+    opacity: 0 !important;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.description:hover {
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.description:hover:not(.fade-out),
+.description:hover.fade-out {
+    opacity: 1 !important;
+    transition: opacity 0.5s ease-in-out, transform 0.3s ease;
 }
 
 #typing-cursor {
-    animation: blink 0.7s infinite alternate;
+    animation: blink 1.3s infinite alternate;
 }
 
 .links {
     font-size: 2.5em;
     display: flex;
     justify-content: center;
+    margin-top: 15px;
 }
 
 .icon {
     color: #fff;
     margin: 0 15px;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease;
     font-size: 1em;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+}
+
+.icon i {
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .icon:hover {
     color: #808080;
+    transform: scale(1.1);
 }
 
 #particles-js {
@@ -53,4 +95,16 @@ body {
     height: 100%;
     background-color: transparent;
     z-index: 0;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
