@@ -2,6 +2,7 @@
   "name": "toretto-portfolio",
   "version": "2.0.0",
   "type": "module",
+  "packageManager": "pnpm@10.13.1",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
