@@ -15,12 +15,12 @@ document.addEventListener("DOMContentLoaded", function() {
         "The most disastrous thing that you can ever learn is your first programming language. - Alan Kay",
         "Walking on water and developing software from a specification are easy if both are frozen. - Edward V. Berard"
     ];
-      
+
     var descriptionElement = document.getElementById("description");
     var currentIndex = -1;
     var isHovering = false;
-    
-    descriptionElement.textContent = quotes[Math.floor(Math.random() * quotes.length)]; // initial landing
+
+    descriptionElement.textContent = quotes[Math.floor(Math.random() * quotes.length)];
 
     function changeDescription() {
         var nextIndex;

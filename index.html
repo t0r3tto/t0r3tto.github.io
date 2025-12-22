@@ -3,37 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>toretto.dev</title>
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link rel="stylesheet" href="css/styles.css">
+    <meta name="description" content="Professional FiveM Developer with 5+ years of experience. Specializing in custom scripts, server setup, UI/UX development, and optimization for QBCore, ESX, vRP, QBox, and custom frameworks.">
+    <meta name="keywords" content="FiveM Developer, FiveM Scripts, QBCore, ESX, vRP, QBox, Server Development, Custom Scripts, NUI Development">
+    <meta name="author" content="Toretto">
 
-    <!-- Preload fonts to improve performance -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" as="style" onload="this.rel='stylesheet'">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" as="style" onload="this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap"></noscript>
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"></noscript>
-    <script src="js/matomo.js"></script>
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toretto.dev/">
+    <meta property="og:title" content="Toretto - Professional FiveM Developer">
+    <meta property="og:description" content="Professional FiveM Developer with 5+ years of experience. Specializing in custom scripts, server setup, UI/UX development, and optimization.">
+    <meta property="og:image" content="https://toretto.dev/assets/logo.png">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://toretto.dev/">
+    <meta property="twitter:title" content="Toretto - Professional FiveM Developer">
+    <meta property="twitter:description" content="Professional FiveM Developer with 5+ years of experience. Specializing in custom scripts, server setup, UI/UX development, and optimization.">
+    <meta property="twitter:image" content="https://toretto.dev/assets/logo.png">
+
+    <meta name="theme-color" content="#0a0a0a">
+
+    <title>Toretto - Professional FiveM Developer | Custom Scripts & Server Development</title>
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Inter', system-ui, sans-serif;
+            overflow-x: hidden;
+        }
+        #root {
+            min-height: 100vh;
+            width: 100%;
+        }
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Toretto",
+      "url": "https://toretto.dev",
+      "jobTitle": "FiveM Developer",
+      "description": "Professional FiveM Developer with 5+ years of experience specializing in custom scripts, server setup, UI/UX development, and optimization.",
+      "sameAs": [
+        "https://github.com/t0r3tto",
+        "https://store.toretto.dev",
+        "https://discord.gg/QFCG2kDkeS"
+      ],
+      "knowsAbout": [
+        "FiveM Development",
+        "Lua Programming",
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "QBCore",
+        "ESX",
+        "vRP",
+        "QBox",
+        "Server Optimization"
+      ]
+    }
+    </script>
 </head>
 <body>
-    <div id="particles-js"></div>
-    <div class="container">
-        <a href="https://discord.gg/QFCG2kDkeS" class="logo" target="_blank"><img src="assets/logo.png"></a>
-        <p class="description" id="description"></p>
-        <div class="links">
-            <a href="https://store.toretto.dev" target="_blank" class="icon">
-                <i class="fas fa-store"></i>
-            </a>
-            <a href="https://discord.gg/QFCG2kDkeS" target="_blank" class="icon">
-                <i class="fa-brands fa-discord"></i>
-            </a>
-            <a href="https://github.com/t0r3tto" target="_blank" class="icon">
-                <i class="fab fa-github"></i>
-            </a>
-        </div>
-    </div>
-    <!-- Defer loading of Font Awesome icons -->
-    <script defer src="https://kit.fontawesome.com/96e7bd8ea7.js" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script defer src="js/script.js"></script>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>
