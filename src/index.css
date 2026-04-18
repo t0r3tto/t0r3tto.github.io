@@ -3,161 +3,222 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --paper: #f4efe4;
+    --paper-2: #ebe4d3;
+    --ink: #0c0c0c;
+    --ink-2: #1a1a1a;
+    --muted: #6b6154;
+    --muted-2: #aa9d87;
+    --tan: #d9cdb8;
+    --accent: #620726;
+    --ok: #3f7a3a;
+    --warn: #c89a1f;
+    --grain-opacity: 0.06;
+    --grain-color: 0, 0, 0;
+    --accent-glow: 98, 7, 38;
+  }
+
+  [data-theme="dark"] {
+    --paper: #0e0e10;
+    --paper-2: #17171a;
+    --ink: #f0ebe0;
+    --ink-2: #d8d1c1;
+    --muted: #8a8377;
+    --muted-2: #4a4740;
+    --tan: #2a2824;
+    --accent: #c4284c;
+    --ok: #7ac46f;
+    --warn: #e0b44a;
+    --grain-opacity: 0.08;
+    --grain-color: 255, 255, 255;
+    --accent-glow: 196, 40, 76;
+  }
+
   * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
   }
 
   html {
     scroll-behavior: smooth;
-    width: 100%;
-    height: 100%;
   }
 
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
     }
-
     *,
     *::before,
     *::after {
       animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
   }
 
   body {
-    width: 100%;
-    min-height: 100vh;
-    color: #ffffff;
-    background-color: #0a0a0a;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter Tight', system-ui, -apple-system, sans-serif;
+    font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /* paper grain */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image:
+      radial-gradient(circle at 15% 25%, rgba(var(--grain-color), 0.03) 0, transparent 40%),
+      radial-gradient(circle at 85% 75%, rgba(var(--accent-glow), 0.05) 0, transparent 45%);
+    mix-blend-mode: multiply;
+  }
+
+  [data-theme="dark"] body::before {
+    mix-blend-mode: screen;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    opacity: var(--grain-opacity);
+    background-image: repeating-linear-gradient(
+      0deg,
+      rgba(var(--grain-color), 0.6) 0 0.5px,
+      transparent 0.5px 3px
+    );
   }
 
   #root {
     width: 100%;
     min-height: 100vh;
-  }
-}
-
-@layer components {
-  .app {
-    width: 100%;
-    min-height: 100vh;
-    background-color: #0a0a0a;
-    color: #ffffff;
-  }
-
-  .section {
-    padding: 4rem 0;
     position: relative;
+    z-index: 3;
   }
 
-  @media (min-width: 768px) {
-    .section {
-      padding: 6rem 0;
-    }
-  }
-  
-  .section-title {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 2rem;
-    text-align: center;
-    line-height: 1.2;
+  ::selection {
+    background: var(--accent);
+    color: var(--paper);
   }
 
-  @media (min-width: 768px) {
-    .section-title {
-      font-size: 2.5rem;
-      margin-bottom: 3rem;
-    }
-  }
-  
-  .container {
-    max-width: 1280px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    width: 100%;
+  a {
+    color: inherit;
+    text-decoration: none;
   }
 
-  @media (min-width: 1536px) {
-    .container {
-      max-width: 1400px;
-    }
-  }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--paper); }
+  ::-webkit-scrollbar-thumb { background: var(--ink); border: 3px solid var(--paper); }
+
+  .brand-logo { filter: none; }
+  [data-theme="light"] .brand-logo { filter: invert(1); }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-  
-  .line-clamp-5 {
-    display: -webkit-box;
-    -webkit-line-clamp: 5;
-    line-clamp: 5;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+  .serif {
+    font-family: 'Instrument Serif', 'Times New Roman', serif;
+    font-weight: 400;
+    letter-spacing: -0.015em;
   }
 
-  @keyframes marquee {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(calc(-100% / 4));
-    }
-  }
-  
-  .animate-marquee {
-    animation: marquee 30s linear infinite;
-    width: fit-content;
+  .mono {
+    font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
   }
 
-  .group\/marquee:hover .animate-marquee {
-    animation-play-state: paused;
-  }
-  
-  .skip-link {
-    position: absolute;
-    top: -100px;
-    left: 0;
-    background: #e5e5e5;
-    color: #0a0a0a;
-    padding: 8px 16px;
-    text-decoration: none;
-    z-index: 100;
+  .caps {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 10px;
     font-weight: 600;
-    border-radius: 0 0 4px 0;
-    opacity: 0;
-    pointer-events: none;
   }
 
-  .skip-link:focus {
-    top: 0;
-    opacity: 1;
-    pointer-events: auto;
+  .rule {
+    height: 1px;
+    background: var(--ink);
+    opacity: 0.9;
   }
 
-  *:focus-visible {
-    outline: 2px solid #e5e5e5;
-    outline-offset: 2px;
-    border-radius: 2px;
+  .rule-thin {
+    height: 1px;
+    background: var(--ink);
+    opacity: 0.15;
   }
 
-  button:focus-visible,
-  a:focus-visible {
-    outline: 2px solid #e5e5e5;
-    outline-offset: 2px;
+  .rule-dotted {
+    height: 1px;
+    background-image: linear-gradient(to right, var(--ink) 50%, transparent 50%);
+    background-size: 6px 1px;
+    background-repeat: repeat-x;
+    opacity: 0.35;
   }
+
+  .dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    position: relative;
+  }
+
+  .dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse-dot 1.8s ease-out infinite;
+  }
+
+  .caret {
+    display: inline-block;
+    width: 0.55em;
+    height: 1em;
+    background: var(--ink);
+    vertical-align: -0.12em;
+    animation: blink 1s steps(1) infinite;
+    margin-left: 2px;
+  }
+
+  .caret-accent {
+    background: var(--accent);
+  }
+
+  .hide-sm {
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .hide-sm {
+      display: revert;
+    }
+  }
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.6); opacity: 0.2; }
+}
+
+@keyframes svcFade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
 }

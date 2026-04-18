@@ -1,107 +1,204 @@
-import { motion } from 'framer-motion'
-import { ArrowDown, CheckCircle } from 'lucide-react'
-import Particles from './Particles'
+import { useState } from 'react'
+import SectionShell from './SectionShell'
+import { DATA } from '../data'
+import { useTypewriter, useInterval } from '../hooks'
+
+const btnPrimary: React.CSSProperties = {
+  padding: '12px 20px',
+  background: 'var(--ink)',
+  color: 'var(--paper)',
+  fontFamily: 'JetBrains Mono, monospace',
+  fontSize: 12,
+  letterSpacing: '0.06em',
+  textTransform: 'uppercase',
+  fontWeight: 500,
+  border: '1px solid var(--ink)',
+  cursor: 'pointer',
+  display: 'inline-block',
+}
+
+const btnGhost: React.CSSProperties = {
+  padding: '12px 20px',
+  background: 'transparent',
+  color: 'var(--ink)',
+  fontFamily: 'JetBrains Mono, monospace',
+  fontSize: 12,
+  letterSpacing: '0.06em',
+  textTransform: 'uppercase',
+  fontWeight: 500,
+  border: '1px solid var(--ink)',
+  display: 'inline-block',
+  cursor: 'pointer',
+}
+
+function FrameworkStrip() {
+  return (
+    <div style={{
+      marginTop: 'clamp(36px, 5vw, 56px)',
+      paddingTop: 14,
+      borderTop: '1px solid var(--ink)',
+    }}>
+      <span className="caps" style={{ color: 'var(--muted)', display: 'block', marginBottom: 14 }}>works across —</span>
+      <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 6 }}>
+        {DATA.frameworks.map(f => (
+          <a
+            key={f.name}
+            href={f.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={f.name}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 7,
+              padding: '6px 10px',
+              border: '1px solid var(--ink)',
+              background: 'var(--paper-2)',
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: 10.5,
+              letterSpacing: '0.04em',
+              color: 'var(--ink)',
+              textDecoration: 'none',
+              transition: 'background 160ms, border-color 160ms, color 160ms',
+            }}
+            onMouseEnter={e => {
+              const el = e.currentTarget as HTMLAnchorElement
+              el.style.background = 'var(--ink)'
+              el.style.color = 'var(--paper)'
+            }}
+            onMouseLeave={e => {
+              const el = e.currentTarget as HTMLAnchorElement
+              el.style.background = 'var(--paper-2)'
+              el.style.color = 'var(--ink)'
+            }}
+          >
+            <img
+              src={f.icon}
+              alt={f.name}
+              width={16}
+              height={16}
+              style={{ display: 'block', objectFit: 'contain', borderRadius: 2 }}
+            />
+            {f.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function nowIso() {
+  return new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC'
+}
 
 export default function Hero() {
-  const scrollToAbout = () => {
-    const element = document.getElementById('about')
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
+  const tagline = useTypewriter(DATA.tagline, { speed: 22, start: 700 })
+  const [ts, setTs] = useState(nowIso)
+  useInterval(() => setTs(nowIso()), 1000)
+
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id)
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <Particles />
-
-      <div className="relative z-10 text-center px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="mb-8 sm:mb-10 md:mb-12 flex justify-center"
-          >
-            <img
-              src="/assets/logo.png"
-              alt="Toretto Studios Logo"
-              className="h-[162px] sm:h-[216px] md:h-[270px] lg:h-[324px] w-auto object-contain"
-            />
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight"
-          >
-            <span className="block">FiveM Developer</span>
-            <span className="block text-accent">5+ Years Experience</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            className="text-gray-400 text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-8 sm:mb-12 px-4"
-          >
-            Crafting immersive, high-performance FiveM servers with custom scripts, seamless UI/UX, and optimized performance
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-          >
-            <motion.button
-              onClick={() => {
-                const element = document.getElementById('contact')
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                }
-              }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2 px-8 py-3 bg-light-gray/20 hover:bg-light-gray/30 border border-light-gray/30 rounded-lg font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-dark"
-              aria-label="Get in touch - navigate to contact section"
-            >
-              <CheckCircle className="w-5 h-5" aria-hidden="true" />
-              Get in Touch
-            </motion.button>
-
-            <motion.button
-              onClick={() => {
-                const element = document.getElementById('projects')
-                if (element) element.scrollIntoView({ behavior: 'smooth' })
-              }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 bg-transparent hover:bg-light-gray/10 border border-light-gray/20 rounded-lg font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-dark"
-              aria-label="View work - navigate to projects section"
-            >
-              View Work
-            </motion.button>
-          </motion.div>
-        </motion.div>
-
-        <motion.button
-          onClick={scrollToAbout}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
-          className="mt-16 sm:mt-24 md:mt-32 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-dark rounded-full p-2"
-          whileHover={{ y: 5 }}
-          whileTap={{ scale: 0.95 }}
-          aria-label="Scroll to about section"
-        >
-          <ArrowDown className="w-6 h-6 text-gray-400 animate-bounce" aria-hidden="true" />
-        </motion.button>
+    <SectionShell id="home" first>
+      {/* Meta ribbon */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+        gap: 16,
+        marginBottom: 'clamp(40px, 6vw, 80px)',
+        fontFamily: 'JetBrains Mono, monospace',
+        fontSize: 10,
+        textTransform: 'uppercase',
+        letterSpacing: '0.12em',
+        color: 'var(--muted)',
+        paddingBottom: 12,
+        borderBottom: '1px solid var(--ink)',
+      }}>
+        <div><span style={{ color: 'var(--ink)' }}>{DATA.handle}</span> / portfolio</div>
+        <div>view: <span style={{ color: 'var(--accent)' }}>live ops</span></div>
+        <div>rev 2026.04 — r03</div>
+        <div style={{ textAlign: 'right' }}>{ts}</div>
       </div>
-    </section>
+
+      {/* Hero grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: 'clamp(32px, 5vw, 64px)', alignItems: 'end' }}>
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+            <span className="dot" />
+            <span className="mono caps" style={{ color: 'var(--ink)' }}>Available for contract — Q2 2026</span>
+          </div>
+
+          <h1 className="serif" style={{
+            fontSize: 'clamp(54px, 11vw, 184px)',
+            lineHeight: 0.92,
+            margin: 0,
+            letterSpacing: '-0.025em',
+          }}>
+            FiveM<br />
+            <span style={{ fontStyle: 'italic', color: 'var(--accent)' }}>developer</span>,
+            <br />
+            <span style={{ color: 'var(--ink)' }}>for hire.</span>
+          </h1>
+
+          <div style={{ marginTop: 'clamp(28px, 4vw, 56px)' }} className="hero-sub">
+            <p className="mono" style={{
+              fontSize: 13,
+              lineHeight: 1.6,
+              color: 'var(--ink-2)',
+              margin: '0 0 24px',
+              maxWidth: 560,
+              minHeight: '3em',
+            }}>
+              <span style={{ color: 'var(--accent)' }}>// </span>
+              {tagline}
+              <span className="caret caret-accent" />
+            </p>
+
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+              <button onClick={() => scrollTo('contact')} style={btnPrimary}>Start a project →</button>
+              <button onClick={() => scrollTo('projects')} style={btnGhost}>View work</button>
+            </div>
+          </div>
+
+          <style>{`
+            @media (min-width: 800px) {
+              .hero-sub {
+                display: grid !important;
+                grid-template-columns: minmax(0, 1fr) auto;
+                gap: 24px;
+                align-items: end;
+              }
+              .hero-sub p { margin-bottom: 0 !important; }
+            }
+          `}</style>
+        </div>
+      </div>
+
+      {/* Stats row */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+        gap: 1,
+        marginTop: 'clamp(40px, 6vw, 80px)',
+        background: 'var(--ink)',
+        border: '1px solid var(--ink)',
+      }}>
+        {DATA.stats.map(s => (
+          <div key={s.k} style={{
+            background: 'var(--paper)',
+            padding: '20px 20px 18px',
+            display: 'flex', flexDirection: 'column', gap: 6,
+          }}>
+            <span className="mono caps" style={{ color: 'var(--muted)' }}>{s.k}</span>
+            <span className="serif" style={{ fontSize: 48, lineHeight: 1, letterSpacing: '-0.02em' }}>{s.v}</span>
+          </div>
+        ))}
+      </div>
+
+      <FrameworkStrip />
+    </SectionShell>
   )
 }

@@ -1,157 +1,153 @@
-import { motion } from 'framer-motion'
-import { useInView } from 'framer-motion'
-import { useRef } from 'react'
-import { Star, Quote } from 'lucide-react'
+import SectionShell from './SectionShell'
+import Flag from './Flag'
+import Logo from './Logo'
+import { DATA } from '../data'
 
-const reviews = [
-  {
-    name: 'death102',
-    country: 'Denmark',
-    flag: '🇩🇰',
-    rating: 5,
-    text: "Toretto Studios did an amazing job with this project! Their development skills are top-notch—everything runs smoothly with no bugs, and the code is clean and well-structured. They're not just technically skilled; they're also great to work with—polite, professional, and even done before agreed time. Highly recommend him!",
-    priceRange: '$1,000 - $1,500',
-    service: 'Custom Script',
-  },
-  {
-    name: 'damian_labestia',
-    country: 'United States',
-    flag: '🇺🇸',
-    rating: 5,
-    text: "This is awesome and fully delivered on time and the server runs smooth as well. definitely hiring him again",
-    priceRange: '$200 - $400',
-    service: 'Server Creation',
-  },
-  {
-    name: 'drnemanicouagan',
-    country: 'Canada',
-    flag: '🇨🇦',
-    rating: 5,
-    text: "If you want to build a server this guy, is very professionnel i have try 3 other guy before this guy is amazing call this guy for a professionel server",
-    priceRange: '$200 - $400',
-    service: 'Server Creation',
-  },
-  {
-    name: 'paintmediallc',
-    country: 'United States',
-    flag: '🇺🇸',
-    rating: 5,
-    text: "Toretto is the best! I was worried about reaching out due to me getting scammed before, but he over delivered on his promise!! He's the most honest person in the game!!",
-    priceRange: '$100 - $200',
-    service: 'Bug Fixing',
-  },
-  {
-    name: 'ashemberlove530',
-    country: 'United States',
-    flag: '🇺🇸',
-    rating: 5,
-    text: "Toretto Studios is an OUTSTANDING choice for game development projects! Their expertise in coding and delivering bug-free, professional work made collaborating a seamless experience. Their quick responsiveness and cooperative nature were second to none—truly a pleasure to work with! 🙌",
-    priceRange: '$100 - $200',
-    service: 'Bug Fixing',
-  },
-  {
-    name: 'kjeldveldhui588',
-    country: 'Netherlands',
-    flag: '🇳🇱',
-    rating: 5,
-    text: "Amazing work! Really fast response and knowledge of scripting even though he did not know the script!",
-    priceRange: '$50 - $100',
-    service: 'Bug Fixing',
-  },
-  {
-    name: 'ghiwunashek',
-    country: 'Saudi Arabia',
-    flag: '🇸🇦',
-    rating: 5,
-    text: "Absolutely excellent service! Toretto went above and beyond to deliver exactly what I was looking for. Clear communication, fast delivery, and top-tier scripting quality. best of world thank you 50000 star. 🌹",
-    priceRange: '$500 - $1000',
-    service: 'Custom Script',
-  },
-  {
-    name: 'brothersblood22',
-    country: 'United States',
-    flag: '🇺🇸',
-    rating: 5,
-    text: "Great to work with! they were pretty quick with the order! Would love to order from them again! :)",
-    priceRange: '$100 - $200',
-    service: 'Bug Fixing',
-  },
-]
+type Review = typeof DATA.reviews[number]
 
-export default function Reviews() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
+const tornClip = 'polygon(0 0,100% 0,100% calc(100% - 10px),96% 100%,92% calc(100% - 10px),88% 100%,84% calc(100% - 10px),80% 100%,76% calc(100% - 10px),72% 100%,68% calc(100% - 10px),64% 100%,60% calc(100% - 10px),56% 100%,52% calc(100% - 10px),48% 100%,44% calc(100% - 10px),40% 100%,36% calc(100% - 10px),32% 100%,28% calc(100% - 10px),24% 100%,20% calc(100% - 10px),16% 100%,12% calc(100% - 10px),8% 100%,4% calc(100% - 10px),0 100%)'
+
+function Receipt({ r, idx }: { r: Review; idx: number }) {
+  const inv = `INV-${String(2026000 + idx * 7).padStart(7, '0')}`
+  const rot = (idx % 5 - 2) * 0.4
 
   return (
-    <section id="reviews" ref={ref} className="section">
-      <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="text-center mb-12">
-            <h2 className="section-title">Client Reviews</h2>
-            <p className="text-gray-400 text-base sm:text-lg mt-4 max-w-2xl mx-auto px-4">
-              Trusted by developers and server owners worldwide
-            </p>
+    <div
+      style={{
+        background: 'var(--paper-2)',
+        color: 'var(--ink)',
+        fontFamily: 'JetBrains Mono, monospace',
+        fontSize: 11,
+        padding: '18px 18px 24px',
+        transform: `rotate(${rot}deg)`,
+        boxShadow: '2px 2px 0 var(--ink)',
+        border: '1px solid var(--ink)',
+        borderBottom: 'none',
+        clipPath: tornClip,
+        position: 'relative',
+        transition: 'transform 240ms ease-out',
+      }}
+      onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.transform = 'rotate(0deg) translateY(-4px)' }}
+      onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.transform = `rotate(${rot}deg)` }}
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10, gap: 12 }}>
+        <div style={{ display: 'flex', gap: 10, alignItems: 'center', minWidth: 0 }}>
+          <div style={{ flexShrink: 0 }}>
+            <Logo size={32} withWordmark={false} />
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {reviews.map((review, index) => (
-              <motion.div
-                key={`${review.name}-${index}`}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
-                className="bg-dark-gray/50 border border-light-gray/10 rounded-xl p-6 hover:border-light-gray/30 transition-colors duration-200 flex flex-col"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-2">
-                    <span className="text-2xl">{review.flag}</span>
-                    <div>
-                      <p className="font-semibold text-sm">{review.name}</p>
-                      <p className="text-xs text-gray-400">{review.country}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-1 mb-3">
-                  {[...Array(review.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-
-                <div className="flex-1 mb-4">
-                  <Quote className="w-5 h-5 text-accent/50 mb-2" />
-                  <p className="text-gray-300 text-sm leading-relaxed line-clamp-5">
-                    {review.text}
-                  </p>
-                </div>
-
-                <div className="mt-auto pt-4 border-t border-light-gray/10">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-400">{review.service}</span>
-                    <span className="text-sm font-semibold text-accent">{review.priceRange}</span>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+          <div style={{ minWidth: 0 }}>
+            <div style={{ fontWeight: 700, fontSize: 12, letterSpacing: '0.05em' }}>TORETTO STUDIOS</div>
+            <div style={{ color: 'var(--muted)', fontSize: 9, textTransform: 'uppercase', letterSpacing: '0.1em' }}>client receipt</div>
           </div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.5, delay: reviews.length * 0.1 + 0.2 }}
-            className="text-center mt-8"
-          >
-            <p className="text-sm text-gray-500 italic">
-              ...and many more satisfied clients!
-            </p>
-          </motion.div>
-        </motion.div>
+        </div>
+        <div style={{ textAlign: 'right', fontSize: 9, color: 'var(--muted)', flexShrink: 0 }}>
+          <div>{inv}</div>
+          <div>2026-0{(idx % 9) + 1}-{String((idx * 3 + 5) % 28 + 1).padStart(2, '0')}</div>
+        </div>
       </div>
-    </section>
+
+      <div style={{ borderTop: '1px dashed var(--ink)', margin: '8px -18px 12px' }} />
+
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+        <span>CLIENT</span>
+        <span style={{ color: 'var(--ink)' }}>{r.name}</span>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6, alignItems: 'center' }}>
+        <span>SHIP TO</span>
+        <span style={{ color: 'var(--ink)', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+          <Flag code={r.flag} size={18} />
+          {r.country}
+        </span>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
+        <span>SERVICE</span>
+        <span style={{ color: 'var(--ink)' }}>{r.service}</span>
+      </div>
+
+      <div style={{ borderTop: '1px dashed var(--ink)', margin: '4px -18px 12px' }} />
+
+      <p style={{
+        fontFamily: 'Instrument Serif, serif',
+        fontSize: 17,
+        lineHeight: 1.35,
+        margin: '4px 0 14px',
+        letterSpacing: '-0.005em',
+        color: 'var(--ink)',
+      }}>
+        <span style={{ color: 'var(--accent)' }}>"</span>
+        {r.quote}
+        <span style={{ color: 'var(--accent)' }}>"</span>
+      </p>
+
+      <div style={{ letterSpacing: '0.3em', color: 'var(--accent)', marginBottom: 10, fontSize: 11 }}>★★★★★</div>
+
+      <div style={{ borderTop: '1px dashed var(--ink)', margin: '4px -18px 10px' }} />
+
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+        <span style={{ fontSize: 10, color: 'var(--muted)' }}>TOTAL</span>
+        <span style={{
+          fontSize: 15, fontWeight: 700,
+          color: 'var(--accent)',
+          border: '1.5px solid var(--accent)',
+          padding: '3px 8px',
+          letterSpacing: '0.04em',
+          transform: 'rotate(-2deg)',
+          display: 'inline-block',
+        }}>
+          {r.price}
+        </span>
+      </div>
+
+      <div style={{ position: 'absolute', bottom: 14, left: 18, fontSize: 8, color: 'var(--muted-2)', letterSpacing: '0.1em' }}>
+        · · · · · thank you · · · · ·
+      </div>
+    </div>
+  )
+}
+
+export default function Reviews() {
+  const uniqueFlags = [...new Set(DATA.reviews.map(r => r.flag))]
+
+  return (
+    <SectionShell id="reviews" label="§ 04 — Proof of Work">
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) auto', alignItems: 'end', marginBottom: 32, gap: 20 }}>
+        <h2 className="serif" style={{ fontSize: 'clamp(40px, 6vw, 88px)', lineHeight: 0.98, margin: 0, letterSpacing: '-0.02em' }}>
+          Receipts.<br />
+          <em style={{ color: 'var(--accent)' }}>No screenshots.</em>
+        </h2>
+        <div className="mono" style={{ fontSize: 11, color: 'var(--muted)', textAlign: 'right' }}>
+          all 5★<br />
+          <span style={{ color: 'var(--ink)' }}>verified · delivered · paid</span>
+        </div>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 20, marginBottom: 44 }}>
+        {DATA.reviews.map((r, i) => <Receipt key={r.name} r={r} idx={i} />)}
+      </div>
+
+      <div style={{
+        padding: '18px 22px',
+        border: '1px solid var(--ink)',
+        display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap',
+        background: 'var(--paper-2)',
+      }}>
+        <span className="mono caps" style={{ color: 'var(--muted)', flexShrink: 0, fontSize: 11 }}>shipped to</span>
+        <div style={{ display: 'flex', gap: 14, alignItems: 'center', flexWrap: 'wrap', flex: 1 }}>
+          {uniqueFlags.map(code => {
+            const country = DATA.reviews.find(r => r.flag === code)!.country
+            const count = DATA.reviews.filter(r => r.flag === code).length
+            return (
+              <div key={code} style={{ display: 'flex', alignItems: 'center', gap: 7 }} title={`${country} · ${count} project${count > 1 ? 's' : ''}`}>
+                <Flag code={code} size={32} />
+                <span className="mono" style={{ fontSize: 10, color: 'var(--ink)', letterSpacing: '0.05em' }}>
+                  {code}{count > 1 && <span style={{ color: 'var(--accent)', marginLeft: 2 }}>×{count}</span>}
+                </span>
+              </div>
+            )
+          })}
+        </div>
+        <span className="mono" style={{ fontSize: 10, color: 'var(--muted)', flexShrink: 0, letterSpacing: '0.1em' }}>— and counting.</span>
+      </div>
+    </SectionShell>
   )
 }
